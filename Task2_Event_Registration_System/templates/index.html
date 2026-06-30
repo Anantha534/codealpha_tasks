@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Registration System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <h1>Upcoming Events</h1>
+            <p class="subtitle">Browse events and register your seat</p>
+        </header>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="event-grid">
+            {% for event in events %}
+            <div class="event-card">
+                <h2>{{ event.title }}</h2>
+                <p class="event-meta">{{ event.date }} &middot; {{ event.venue }}</p>
+                <p class="event-desc">{{ event.description }}</p>
+                <div class="event-actions">
+                    <a class="btn btn-outline" href="{{ url_for('event_detail', event_id=event.id) }}">View</a>
+                    <a class="btn btn-primary" href="{{ url_for('register', event_id=event.id) }}">Register</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
